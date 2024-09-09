@@ -1,0 +1,339 @@
+﻿<!--@model DonationWall.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+    Layout = null;
+}
+
+<head>-->
+<!-- Required meta tags -->
+<!--<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Article Managment</title>-->
+<!-- base:css -->
+<!--<link rel="stylesheet" href="~/Content/template/vendors/typicons/typicons.css">
+<link rel="stylesheet" href="~/Content/template/vendors/css/vendor.bundle.base.css">-->
+<!-- endinject -->
+<!-- plugin css for this page -->
+<!-- End plugin css for this page -->
+<!-- inject:css -->
+<!--<link rel="stylesheet" href="~/Content/template/css/vertical-layout-light/style.css">-->
+<!-- endinject -->
+<!--<link rel="shortcut icon" href="~/Content/template/images/g-icon-15.jpg" />
+</head>
+<style>
+
+    .auth .brand-logo img {
+        width: 300px;
+    }
+</style>
+
+
+
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center auth px-0">
+            <div class="row w-100 mx-0">
+
+                <div class="col-lg-4 mx-auto">
+                    <div style=" color:white; background-color: dodgerblue; " class="auth-form-light text-left py-5 px-4 px-sm-5">
+                        <div style="width:300px" class="brand-logo">
+                            <img src="~/Content/DonationWallTheme/stack-admin/app-assets/images/logo/logo DW (1).png">
+                        </div>
+                        <h4>Hello! let's get started</h4>
+                        <h6 class="font-weight-light">Register New Account.</h6>
+                        <section id="registerform">
+                            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+
+                            <div class="form-group">
+                                <label>Email</label>
+                                    <input type="email" name="Email" class="form-control" placeholder="Enter Email" />
+
+                            </div>
+
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input class="form-control" name="Name" placeholder="Enter Full Name.">
+                                </div>
+
+                                <div class="form-group ">
+                                    <label>Role</label>
+                                        <select name="RoleID" class="form-control">
+
+                                            @foreach (var item in Model.Roles)
+                                            {
+                                                if (item.Name.ToString() != "Admin")
+                                                {
+                                                <option value="@item.Id">@item.Name</option>
+                                                    }
+                                                }
+
+
+                                        </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Contact</label>
+                                    <input class="form-control" name="Contact" placeholder="Enter Contact.">
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                        <input class="form-control" name="Password" type="password" placeholder="Enter Password.">
+                                </div>
+                                <div class="form-group">
+                                    <label>Confirm Password</label>
+                                        <input class="form-control" name="ConfirmPassword" type="password" placeholder="Enter Password.">
+                                </div>
+                                <hr />
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-12">
+                                        <button type="submit" class="btn btn-primary btn-block"> Register</button>
+                                    </div>
+                                    <br />
+                                    <div class="col-md-offset-2 col-md-12">
+                                        <a href="@Url.Action("Login","Account")" class="btn btn-primary"> Login</a>
+                                    </div>
+                                </div>
+                            }
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+<!-- content-wrapper ends -->
+<!--</div>-->
+<!-- page-body-wrapper ends -->
+<!--</div>
+
+
+
+<script src="~/Content/template/vendors/js/vendor.bundle.base.js"></script>-->
+<!-- endinject -->
+<!-- inject:js -->
+<!--<script src="~/Content/template/js/off-canvas.js"></script>
+<script src="~/Content/template/js/hoverable-collapse.js"></script>
+<script src="~/Content/template/js/template.js"></script>
+<script src="~/Content/template/js/settings.js"></script>
+<script src="~/Content/template/js/todolist.js"></script>-->
+
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Donation Wall Registration Page">
+    <meta name="keywords" content="admin template, registration page, responsive template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>Donation Wall | Register</title>
+    <link rel="apple-touch-icon" href="/Content/DonationWallTheme/stack-admin/app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/Content/DonationWallTheme/stack-admin/app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/stack-admin/app-assets/vendors/css/vendors.min.css">
+    <!-- END: Vendor CSS-->
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/stack-admin/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/stack-admin/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/stack-admin/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/stack-admin/app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/stack-admin/app-assets/css/core/menu/menu-types/horizontal-menu.css">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/stack-admin/app-assets/css/core/colors/palette-gradient.css">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/stack-admin/app-assets/css/pages/login-register.css">
+    <!-- END: Page CSS-->
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/stack-admin/assets/css/style.css">
+    <!-- END: Custom CSS-->
+
+    <style>
+
+        .card {
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            }
+
+
+        .card-title img {
+            max-width: 180px;
+        }
+
+        .card-subtitle {
+            font-size: 1.2rem;
+        }
+
+        .form-control {
+            border-radius: 30px;
+            padding: 15px;
+            font-size: 1rem;
+            border: 1px solid #ced4da;
+            box-shadow: none;
+            transition: border-color 0.3s ease;
+        }
+
+            .form-control:focus {
+                box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
+            }
+
+        .btn-primary {
+            border-radius: 30px;
+            padding: 12px 20px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .btn-primary:hover {
+                box-shadow: 0 4px 15px rgba(37, 117, 252, 0.5);
+            }
+
+        .btn-link {
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+
+        .card-footer {
+            border-top: none;
+            border-radius: 0 0 20px 20px;
+        }
+
+            .card-footer p {
+                font-size: 1rem;
+            }    
+    </style>
+</head>
+<!-- END: Head-->
+<!-- BEGIN: Body-->
+
+<body class="horizontal-layout horizontal-menu horizontal-menu-padding 1-column blank-page blank-page" data-open="hover" data-menu="horizontal-menu" data-col="1-column">
+    <!-- BEGIN: Content-->
+    <div class="app-content container center-layout mt-2">
+        <div class="content-overlay"></div>
+        <div class="content-wrapper">
+            <div class="content-header row"></div>
+            <div class="content-body">
+                <section class="row flexbox-container" style="height: 800px">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-8 col-md-8 col-10 box-shadow-2 p-0">
+                            <div class="card border-grey border-lighten-3 px-2 py-2 m-0">
+                                <div class="card-header text-center">
+                                    <div class="card-title">
+                                        <img src="~/Content/DonationWallTheme/stack-admin/app-assets/images/logo/logo DW (1).png">
+                                    </div>
+                                    <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2">
+                                        <span>Create Account with Donation Wall</span>
+                                    </h6>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                        {
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <fieldset class="form-group position-relative has-icon-left mb-1">
+                                                        <input type="text" name="name" class="form-control form-control-lg" id="user-name" placeholder="User Name">
+                                                        <div class="form-control-position">
+                                                            <i class="feather icon-user"></i>
+                                                        </div>
+                                                    </fieldset>
+                                                    <fieldset class="form-group position-relative has-icon-left mb-1">
+                                                        <input type="email" name="Email" class="form-control form-control-lg" id="user-email" placeholder="Your Email Address" required>
+                                                        <div class="form-control-position">
+                                                            <i class="feather icon-mail"></i>
+                                                        </div>
+                                                    </fieldset>
+                                                    <fieldset class="form-group position-relative has-icon-left mb-1">
+                                                        <select name="RoleID" class="form-control form-control-lg">
+                                                            @foreach (var item in Model.Roles)
+                                                            {
+                                                                if (item.Name.ToString() != "Admin")
+                                                                {
+                                                                    <option value="@item.Id">@item.Name</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                        <div class="form-control-position">
+                                                            <i class="feather icon-user"></i>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <fieldset class="form-group position-relative has-icon-left mb-1">
+                                                        <input type="text" name="Address" class="form-control form-control-lg" id="user-email" placeholder="Your Address" required>
+                                                        <div class="form-control-position">
+                                                            <i class="feather icon-map"></i>
+                                                        </div>
+                                                    </fieldset>
+                                                    <fieldset class="form-group position-relative has-icon-left mb-1">
+                                                        <input type="text" name="Contact" class="form-control form-control-lg" id="user-email" placeholder="Your Contact" required>
+                                                        <div class="form-control-position">
+                                                            <i class="feather icon-phone"></i>
+                                                        </div>
+                                                    </fieldset>
+                                                    <fieldset class="form-group position-relative has-icon-left mb-1">
+                                                        <input type="text" name="CNIC" class="form-control form-control-lg" id="user-email" placeholder="Your CNIC (12345-1234567-0)" required>
+                                                        <div class="form-control-position">
+                                                            <i class="feather icon-phone"></i>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <fieldset class="form-group position-relative has-icon-left">
+                                                        <input type="password" name="Password" class="form-control form-control-lg" id="user-password" placeholder="Enter Password" required>
+                                                        <div class="form-control-position">
+                                                            <i class="fa fa-key"></i>
+                                                        </div>
+                                                    </fieldset>
+                                                    <fieldset class="form-group position-relative has-icon-left">
+                                                        <input type="password" name="ConfirmPassword" class="form-control form-control-lg" id="user-password" placeholder="Enter Password" required>
+                                                        <div class="form-control-position">
+                                                            <i class="fa fa-key"></i>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="feather icon-unlock"></i> Register</button>
+                                        }
+                                    </div>
+                                    <p class="text-center">Already have an account? <a href="~/account/login" class="btn-link">Login</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+    <!-- BEGIN: Vendor JS-->
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/vendors/js/ui/jquery.sticky.js"></script>
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/vendors/js/charts/jquery.sparkline.min.js"></script>
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/vendors/js/forms/validation/jqBootstrapValidation.js"></script>
+    <!-- END: Page Vendor JS-->
+    <!-- BEGIN: Theme JS-->
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/js/core/app-menu.js"></script>
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+    <!-- BEGIN: Page JS-->
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/js/scripts/ui/breadcrumbs-with-stats.js"></script>
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/js/scripts/forms/form-login-register.js"></script>
+    <!-- END: Page JS-->
+
+</body>
+<!-- END: Body-->
+
+</html>

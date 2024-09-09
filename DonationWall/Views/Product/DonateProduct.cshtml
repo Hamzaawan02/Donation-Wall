@@ -1,0 +1,140 @@
+﻿@model List<DonationWall.Entities.Item>
+@{
+    ViewBag.Title = "DonateProduct";
+}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    .container h2, .container h3 {
+        font-weight: bold;
+        color: #00bcd4;
+        text-align: center;
+    }
+
+    .container label {
+        color: #266d76;
+    }
+
+    .form-control {
+        box-shadow: none;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+    }
+
+    .btn {
+        border-radius: 0.25rem;
+    }
+
+    .btn-success {
+        background-color: #00bcd4;
+        border-color: #009688;
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+
+        .btn-success:hover {
+            background-color: #00bcd4;
+            opacity: 0.9;
+            color: #fff;
+        }
+
+    .btn-secondary {
+        background-color: #00bcd4;
+        border-color: #00796B;
+    }
+
+        .btn-secondary:hover {
+            opacity: 0.9;
+        }
+
+    .table-striped thead {
+        background-color: #f8f9fa;
+    }
+
+    .btn-save {
+        background-color: #00bcd4;
+        border-color: #00796B;
+        padding: 6px 12px;
+        font-size: 0.85rem;
+        border-radius: 30px;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .btn-save:hover {
+            background-color: #00bcd4;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            color: #fff;
+        }
+</style>
+
+<div class="container mt-4">
+    <h2 class="mb-4">Donate Product</h2>
+    <form id="donationform" action="@Url.Action("DonateProduct", "Product")" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="name" class="font-weight-bold">Product Name</label>
+                <input type="text" id="name" name="name" class="form-control shadow-sm" required />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="description" class="font-weight-bold">Description</label>
+                <input type="text" id="description" name="description" class="form-control shadow-sm" required />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="location" class="font-weight-bold">Location</label>
+                <input type="text" id="location" name="location" class="form-control shadow-sm" required />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="video" class="font-weight-bold">Please Select Video (Optional)</label>
+                <input type="file" id="video" name="video" class="form-control shadow-sm" />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="itemType" class="font-weight-bold">Please Select Item Type</label>
+                <select id="itemType" class="form-control shadow-sm" name="itemType" required>
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.ID">@item.ItemType</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-4 mb-3 d-none">
+                <label for="imagescount" class="font-weight-bold">Image Count</label>
+                <input type="number" id="imagescount" name="counts" value="0" class="form-control shadow-sm" />
+            </div>
+        </div>
+
+        <h3 class="mt-4 mb-3">Post Images</h3>
+        <div class="table-responsive mb-3">
+            <table class="table table-striped table-bordered shadow-sm" id="imagetable">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Please Select Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input type="file" class="form-control shadow-sm" name="file_0" required />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" id="morephotos" class="btn btn-secondary mt-2 shadow-sm">+ More Images</button>
+        </div>
+        <button type="submit" id="SaveDonation" class="btn btn-save btn-block font-weight-bold shadow-lg">Save Donation</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#morephotos").click(function () {
+            var index = $("#imagescount").val();
+            index = parseInt(index) + 1;
+            $("#imagetable tbody").append("<tr><td><input type='file' class='form-control shadow-sm' name='file_" + index + "' required /></td></tr>");
+            $("#imagescount").val(index);
+        });
+    });
+</script>

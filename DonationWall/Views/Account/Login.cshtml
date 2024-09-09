@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<head>
+    <!-- Meta tags and title -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Donation Wall Login Page">
+    <meta name="keywords" content="admin template, login page, responsive template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>Donation Wall | Login</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/stack-admin/app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/stack-admin/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/stack-admin/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/stack-admin/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/stack-admin/app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/stack-admin/assets/css/style.css">
+
+    <!-- Custom Styles -->
+    <style>
+        .card {
+            border-radius: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            }
+
+        .card-title img {
+            max-width: 180px;
+        }
+
+        .card-subtitle {
+            font-size: 1.2rem;
+        }
+
+        .form-control {
+            border-radius: 30px;
+            padding: 15px;
+            font-size: 1rem;
+            border: 1px solid #ced4da;
+            transition: border-color 0.3s ease;
+        }
+
+            .form-control:focus {
+                box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
+            }
+
+        .btn-primary {
+            border-radius: 30px;
+            padding: 12px 20px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .btn-primary:hover {
+                box-shadow: 0 4px 15px rgba(37, 117, 252, 0.5);
+            }
+
+        .card-footer {
+            border-top: none;
+            border-radius: 0 0 30px 30px;
+        }
+    </style>
+</head>
+<body class="horizontal-layout horizontal-menu horizontal-menu-padding 1-column blank-page blank-page" data-open="hover" data-menu="horizontal-menu" data-col="1-column">
+    <div class="app-content container center-layout mt-2">
+        <div class="content-overlay"></div>
+        <div class="content-wrapper">
+            <div class="content-header row"></div>
+            <div class="content-body">
+                <section class="row flexbox-container">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-4 col-md-8 col-10 box-shadow-2 p-0">
+                            <div class="card border-grey border-lighten-3 m-0">
+                                <div class="card-header border-0">
+                                    <div class="card-title text-center">
+                                        <div class="p-1"><img src="~/Content/DonationWallTheme/stack-admin/app-assets/images/logo/logo DW (1).png"></div>
+                                    </div>
+                                    <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2">
+                                        <span>Login with Donation Wall</span>
+                                    </h6>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                            <fieldset class="form-group position-relative has-icon-left mb-0">
+                                                <input type="email" name="Email" class="form-control form-control-lg" id="user-name" placeholder="Your Email" required>
+                                                <div class="form-control-position">
+                                                    <i class="feather icon-user"></i>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="form-group position-relative has-icon-left">
+                                                <input type="password" name="Password" class="form-control form-control-lg" id="user-password" placeholder="Enter Password" required>
+                                                <div class="form-control-position">
+                                                    <i class="fa fa-key"></i>
+                                                </div>
+                                            </fieldset>
+
+                                            <div class="form-group row">
+                                                <div class="col-12 text-center text-sm-right">
+                                                    <a href="@Url.Action("ForgotPassword", "Account")" class="card-link">Forgot Password?</a>
+                                                </div>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="feather icon-unlock"></i> Login</button>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="">
+                                        <p class="float-sm-right text-center m-0">New to Donation Wall? <a href="~/account/register" class="card-link">Sign Up</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/vendors/js/vendors.min.js"></script>
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/vendors/js/ui/jquery.sticky.js"></script>
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/vendors/js/charts/jquery.sparkline.min.js"></script>
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/vendors/js/forms/icheck/icheck.min.js"></script>
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/vendors/js/forms/validation/jqBootstrapValidation.js"></script>
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/js/core/app-menu.js"></script>
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/js/core/app.js"></script>
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/js/scripts/ui/breadcrumbs-with-stats.js"></script>
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/js/scripts/forms/form-login-register.js"></script>
+</body>
+</html>

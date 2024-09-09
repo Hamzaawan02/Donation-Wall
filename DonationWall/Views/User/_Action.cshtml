@@ -1,0 +1,95 @@
+﻿@model DonationWall.ViewModels.UserActionModel
+
+@if (Model != null)
+{
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @if (!string.IsNullOrEmpty(Model.ID))
+                {
+                    <span>Edit User</span>
+                }
+                else
+                {
+            <span>Create User</span>
+                }
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="actionForm">
+                <input type="hidden" name="ID" value="@Model.ID" />
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input class="form-control" name="Name" placeholder="Enter Full Name." value="@Model.Name">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input class="form-control" name="Email" placeholder="Enter Email." value="@Model.Email">
+                </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Role</label>
+                        <div class="col-sm-9">
+                            <select name="Role" class="form-control">
+                                @foreach (var item in Model.Roles)
+                                {
+                                    <option value="@item.Name">@item.Name</option>
+                                }
+
+
+                            </select>
+                        </div>
+                    </div>
+
+                <div class="form-group">
+                    <label>Contact</label>
+                    <input class="form-control" name="Contact" placeholder="Enter Contact." value="@Model.Contact">
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input class="form-control" name="Password" type="password" placeholder="Enter Password." value="@Model.Password">
+                </div>
+
+
+            </form>
+
+            <div class="errorDiv">
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            @if (!string.IsNullOrEmpty(Model.ID))
+            {
+                <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Update</button>
+            }
+            else
+            {
+                <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save</button>
+            }
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</button>
+        </div>
+    </div>
+}
+
+<script>
+	$("#actionButton").click(function () {
+		$.ajax({
+			url: '@Url.Action("Action", "User")',
+			type: "post",
+			data: $("#actionForm").serialize()
+		})
+		.done(function (response) {
+			if(response.Success)
+			{
+				location.reload();
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+		});
+	});
+</script>

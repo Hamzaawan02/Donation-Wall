@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "VerifyEmail";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en" data-textdirection="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Verify your account with Donation Wall">
+    <meta name="keywords" content="Donation Wall, account verification, email verification">
+    <meta name="author" content="Donation Wall Team">
+    <title>Donation Wall | Verify Account</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500|Open+Sans:300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="/Content/DonationWallTheme/stack-admin/app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" href="/Content/DonationWallTheme/stack-admin/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/Content/DonationWallTheme/stack-admin/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" href="/Content/DonationWallTheme/stack-admin/app-assets/css/colors.css">
+    <link rel="stylesheet" href="/Content/DonationWallTheme/stack-admin/app-assets/css/components.css">
+    <link rel="stylesheet" href="/Content/DonationWallTheme/stack-admin/app-assets/css/pages/login-register.css">
+</head>
+
+<body class="vertical-layout vertical-menu 1-column blank-page" data-open="click" data-menu="vertical-menu" data-col="1-column">
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="content-wrapper">
+            <div class="content-body">
+                <section class="row flexbox-container">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-4 col-md-8 col-10 box-shadow-2 p-0">
+                            <div class="card border-grey border-lighten-3 px-2 py-2 m-0">
+                                <div class="card-header border-0 text-center">
+                                    <img src="~/Content/DonationWallTheme/stack-admin/app-assets/images/logo/logo DW (1).png" alt="Donation Wall Logo">
+                                    <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2">
+                                        <span>Verify Your Account</span>
+                                    </h6>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        @using (Html.BeginForm("VerifyEmail", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+
+                                            <fieldset class="form-group position-relative has-icon-left">
+                                                <input type="number" name="Code" class="form-control form-control-lg" placeholder="Enter Code" required>
+                                                <div class="form-control-position">
+                                                    <i class="fa fa-key"></i>
+                                                </div>
+                                            </fieldset>
+
+                                            <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                                <i class="feather icon-unlock"></i> Verify
+                                            </button>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+    <!-- BEGIN: Vendor JS-->
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/vendors/js/vendors.min.js"></script>
+    <script src="/Content/DonationWallTheme/stack-admin/app-assets/js/core/app.js"></script>
+    <!-- END: Vendor JS-->
+</body>
+</html>

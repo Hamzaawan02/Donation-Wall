@@ -1,0 +1,116 @@
+﻿@model List<DonationWall.ViewModels.RequestStatusViewModel>
+
+@{
+    ViewBag.Title = "Request Status";
+}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    .card {
+        border: none;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        overflow: hidden;
+        background-color: #ffffff;
+        padding: 20px;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+    .card-title {
+        font-weight: bold;
+        color: #00796B; /* Primary color for titles */
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .card-text {
+        color: #6c757d;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 10px;
+    }
+
+    .badge-warning, .badge-status {
+        font-size: 1rem;
+        padding: 5px 15px;
+        border-radius: 20px;
+    }
+
+    .badge-warning {
+        background-color: #ffc107;
+        color: #212529;
+    }
+
+    .badge-status {
+        background-color: #28a745; /* Green background for Completed status */
+        color: #fff;
+    }
+
+    h3 {
+        color: #00796B; /* Consistent primary color */
+        font-weight: bold;
+        margin-bottom: 30px;
+        text-align: center;
+        font-size: 1.75rem; /* Consistent heading size */
+    }
+
+    h5 {
+        color: #6c757d;
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-top: 20px;
+    }
+
+    .container h3, .container h5 {
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="container mt-4">
+    <h3>Request Status</h3>
+    @if (Model.Count == 0)
+    {
+        <h5 class="text-center">No requests found</h5>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var request in Model)
+            {
+                if (request.Post != null)
+                {
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <div class="card h-100">
+                            @{
+                                // Use the ImageUrl property directly
+                                var imageurl = request.ImageUrl == null? "" :  request.ImageUrl.Substring(1, request.ImageUrl.Length - 1);
+                            }
+                            <img class="card-img-top" src="@imageurl" alt="Card image cap" />
+                            <div class="card-body">
+                                <h5 class="card-title">@request.Post.Name</h5> <!-- Product Name in Bold -->
+                                <p class="card-text">@request.Post.Description</p>
+                                <p class="card-text"><strong>Location:</strong> @request.Post.Location</p>
+                                <p class="card-text"><strong>Expressed At:</strong> @request.Interest.ExpressedAt.ToString("MM/dd/yyyy hh:mm tt")</p>
+
+                                @if (request.Interest.Status == "Pending")
+                                {
+                                    <span class="badge badge-warning">Pending</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-status">@request.Interest.Status</span> <!-- Status Badge -->
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>

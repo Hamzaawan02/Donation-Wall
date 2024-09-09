@@ -1,0 +1,145 @@
+﻿@model DonationWall.ViewModels.AdminViewModel
+
+@{
+    ViewBag.Title = "UserProfile";
+}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    body {
+        background-color: #f2f5f8; 
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-picture {
+        border-radius: 50%;
+        border: 3px solid #00bcd4; 
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .profile-picture:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+    .font-weight-bold {
+        color: #00bcd4; 
+        font-size: 1.2rem;
+    }
+
+    .labels {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #6c757d; 
+    }
+
+    .form-control {
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ced4da; 
+    }
+
+    .profile-button {
+        background-color: #00bcd4; 
+        border-color: #00bcd4;
+        padding: 10px 25px;
+        border-radius: 30px;
+        font-size: 1rem;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+        .profile-button:hover {
+            background-color: #008ba3; 
+            color: #ffffff;
+        }
+
+    h4.text-right {
+        font-weight: bold;
+        color: #00bcd4; 
+        font-size: 1.5rem;
+        text-align: left;
+    }
+
+    .mt-5, .my-5 {
+        margin-top: 3rem !important;
+    }
+
+    .rounded {
+        border-radius: 1rem !important;
+    }
+</style>
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <!-- Profile Picture and Profile Information Update Section -->
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img class="profile-picture mt-5" width="150px" src="@Model.ProfilePictureUrl" alt="Profile Picture">
+                <span class="font-weight-bold mt-3">@Model.Name</span>
+                <span class="text-muted">@Model.Email</span>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile Settings</h4>
+                </div>
+                @using (Html.BeginForm("UserProfile", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="ID" value="@Model.ID" />
+
+                    <!-- Profile Picture Upload -->
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="labels">Profile Picture</label>
+                            <input type="file" name="ProfilePicture" class="form-control mt-2">
+                        </div>
+                    </div>
+
+                    <!-- Profile Information -->
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label class="labels">Full Name</label>
+                            <input type="text" name="Name" class="form-control" placeholder="Full Name" value="@Model.Name">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels">Contact</label>
+                            <input type="text" name="Contact" class="form-control" placeholder="Enter phone number" value="@Model.Contact">
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <label class="labels">Email</label>
+                            <input type="email" name="Email" class="form-control" placeholder="Enter Email" value="@Model.Email">
+                        </div>
+                    </div>
+
+                    <!-- Password Update -->
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label class="labels">Current Password</label>
+                            <input name="CurrentPassword" type="password" class="form-control" placeholder="Current Password">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels">New Password</label>
+                            <input name="NewPassword" type="password" class="form-control" placeholder="New Password">
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="mt-5 text-center">
+                        <button class="btn profile-button" type="submit">Update Profile</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

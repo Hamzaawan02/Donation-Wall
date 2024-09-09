@@ -1,0 +1,264 @@
+﻿<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Donation Wall is a platform for spreading kindness through donations.">
+    <meta name="keywords" content="donation, platform, charity, community, responsive">
+    <meta name="author" content="Donation Wall Team">
+    <title>@ViewBag.Title - Donation Wall</title>
+    <link rel="apple-touch-icon" href="/Content/DonationWallTheme/Stack-admin/app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/Content/DonationWallTheme/Stack-admin/app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i|Open+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/Stack-admin/app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/Stack-admin/app-assets/vendors/css/charts/jquery-jvectormap-2.0.3.css">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/Stack-admin/app-assets/vendors/css/charts/morris.css">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/Stack-admin/app-assets/vendors/css/extensions/unslider.css">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/Stack-admin/app-assets/vendors/css/weather-icons/climacons.min.css">
+
+    <!-- Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/Stack-admin/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/Stack-admin/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/Stack-admin/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/Stack-admin/app-assets/css/components.css">
+
+    <!-- Page CSS-->
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/Stack-admin/app-assets/css/core/menu/menu-types/horizontal-menu.css">
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/Stack-admin/app-assets/css/core/colors/palette-gradient.css">
+
+    <!-- Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="/Content/DonationWallTheme/Stack-admin/assets/css/style.css">
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body class="horizontal-layout horizontal-menu horizontal-menu-padding 2-columns" data-open="hover" data-menu="horizontal-menu" data-col="2-columns">
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <!-- BEGIN: Header-->
+        <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-static-top navbar-light navbar-border">
+            <div class="navbar-wrapper d-flex justify-content-between">
+                <div class="navbar-header d-flex align-items-center">
+                    <a class="navbar-brand" href="@Url.Action("Dashboard", "Home")">
+                        <img class="brand-logo" alt="Donation Wall Logo" src="~/Content/DonationWallTheme/stack-admin/app-assets/images/logo/logo DW (1).png" style="max-height: 50px;">
+                    </a>
+                </div>
+                <div class="navbar-container d-flex align-items-center">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item d-md-block">
+                            <a class="nav-link nav-link-expand" href="#">
+                                <i class="ficon feather icon-maximize"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    @{
+                        var userName = Request.Cookies["UserProfile"]?["UserName"];
+                        var profilePictureUrl = Request.Cookies["UserProfile"]?["ProfilePictureUrl"] ?? "/Content/UserProfiles/default.jpg";
+                    }
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown dropdown-user nav-item">
+                            <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
+                                <div class="avatar avatar-online">
+                                    <img src="@profilePictureUrl" alt="avatar">
+                                    <i></i>
+                                </div>
+                                <span class="user-name">@userName</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="@Url.Action("UserProfile", "Account")">
+                                    <i class="feather icon-user"></i> Edit Profile
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">
+                                    <i class="feather icon-power"></i> Logout
+                                </a>
+                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                }
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- END: Header-->
+
+        <!-- BEGIN: Main Menu-->
+        <div class="header-navbar navbar-expand-sm navbar navbar-horizontal navbar-fixed navbar-light navbar-without-dd-arrow navbar-shadow menu-border" role="navigation" data-menu="menu-wrapper">
+            <div class="navbar-container main-menu-content container center-layout" data-menu="menu-container">
+                <div class="nav-card">
+                    <ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
+                        <li class="nav-item @(ViewBag.Title == "Dashboard" ? "active" : "")">
+                            <a class="nav-link" href="@Url.Action("Dashboard", "Home")">
+                                <i class="feather icon-home"></i><span data-i18n="Dashboard">Dashboard</span>
+                            </a>
+                        </li>
+                        @if (User.IsInRole("Donor"))
+                        {
+                            <li class="nav-item @(ViewBag.Title == "Donate Products" ? "active" : "")">
+                                <a class="nav-link" href="@Url.Action("DonateProduct", "Product")">
+                                    <i class="feather icon-package"></i><span data-i18n="Donate Products">Donate Products</span>
+                                </a>
+                            </li>
+                            <li class="nav-item @(ViewBag.Title == "Pending Requests" ? "active" : "")">
+                                <a class="nav-link" href="@Url.Action("PendingRequests", "Home")">
+                                    <i class="feather icon-clock"></i><span data-i18n="Pending Requests">Pending Requests</span>
+                                </a>
+                            </li>
+                            <li class="nav-item @(ViewBag.Title == "Donation History" ? "active" : "")">
+                                <a class="nav-link" href="@Url.Action("DonationHistory", "Home")">
+                                    <i class="feather icon-check-circle"></i><span data-i18n="Donation History">Donation History</span>
+                                </a>
+                            </li>
+                        }
+                        else if (User.IsInRole("Accepter"))
+                        {
+                            <li class="nav-item @(ViewBag.Title == "Request Status" ? "active" : "")">
+                                <a class="nav-link" href="@Url.Action("RequestStatus", "Home")">
+                                    <i class="feather icon-info"></i><span data-i18n="Request Status">Request Status</span>
+                                </a>
+                            </li>
+                            <li class="nav-item @(ViewBag.Title == "Donation History" ? "active" : "")">
+                                <a class="nav-link" href="@Url.Action("DonationHistory", "Home")">
+                                    <i class="feather icon-check-circle"></i><span data-i18n="Donation History">Donation History</span>
+                                </a>
+                            </li>
+                        }
+                        <li class="nav-item @(ViewBag.Title == "About Us" ? "active" : "")">
+                            <a class="nav-link" href="@Url.Action("About", "Home")">
+                                <i class="feather icon-phone"></i><span data-i18n="About Us">About Us</span>
+                            </a>
+                        </li>
+                        <li class="nav-item d-none d-md-block">
+                            <a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#">
+                                <i class="feather icon-menu"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- END: Main Menu-->
+    }
+
+    <!-- BEGIN: Content-->
+    <div class="app-content container center-layout mt-2">
+        <div class="content-overlay"></div>
+        <div class="content-wrapper">
+            <div class="content-header row"></div>
+            <div class="content-body">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <!-- END: Footer-->
+    <!-- Vendor JS-->
+    <script src="/Content/DonationWallTheme/Stack-admin/app-assets/vendors/js/vendors.min.js"></script>
+    <!-- Page Vendor JS-->
+    <script src="/Content/DonationWallTheme/Stack-admin/app-assets/vendors/js/ui/jquery.sticky.js"></script>
+    <script src="/Content/DonationWallTheme/Stack-admin/app-assets/vendors/js/charts/jquery.sparkline.min.js"></script>
+    <script src="/Content/DonationWallTheme/Stack-admin/app-assets/vendors/js/extensions/jquery.knob.min.js"></script>
+    <script src="/Content/DonationWallTheme/Stack-admin/app-assets/js/scripts/extensions/knob.js"></script>
+    <script src="/Content/DonationWallTheme/Stack-admin/app-assets/vendors/js/charts/raphael-min.js"></script>
+    <script src="/Content/DonationWallTheme/Stack-admin/app-assets/vendors/js/charts/morris.min.js"></script>
+    <script src="/Content/DonationWallTheme/Stack-admin/app-assets/vendors/js/charts/jvector/jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="/Content/DonationWallTheme/Stack-admin/app-assets/vendors/js/charts/jvector/jquery-jvectormap-world-mill.js"></script>
+    <script src="/Content/DonationWallTheme/Stack-admin/app-assets/data/jvector/visitor-data.js"></script>
+    <script src="/Content/DonationWallTheme/Stack-admin/app-assets/vendors/js/charts/chart.min.js"></script>
+    <script src="/Content/DonationWallTheme/Stack-admin/app-assets/vendors/js/extensions/unslider-min.js"></script>
+
+    <!-- Theme JS-->
+    <script src="/Content/DonationWallTheme/Stack-admin/app-assets/js/core/app-menu.js"></script>
+    <script src="/Content/DonationWallTheme/Stack-admin/app-assets/js/core/app.js"></script>
+
+    <!-- Page JS-->
+    <script src="/Content/DonationWallTheme/Stack-admin/app-assets/js/scripts/ui/breadcrumbs-with-stats.js"></script>
+    <script src="/Content/DonationWallTheme/Stack-admin/app-assets/js/scripts/pages/dashboard-analytics.js"></script>
+
+    <style>
+        .navbar-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .navbar-header {
+            align-items: center;
+            display: flex;
+        }
+
+        .brand-logo {
+            max-height: 50px;
+            margin-right: 10px;
+            padding-left: 20px;
+        }
+
+        .navbar {
+            background-color: #f8f9fa;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header-navbar {
+            border-bottom: none;
+        }
+
+        .app-content.container {
+            margin-top: 20px;
+        }
+
+        .footer {
+            padding: 20px 0;
+        }
+
+        /* Active navigation item styling */
+        .nav-item.active > .nav-link {
+            font-weight: bold;
+            color: #00796B !important; /* Primary color for active state */
+        }
+
+        /* General nav-link styles */
+        .nav-link {
+            font-size: 1rem;
+            color: #5f6368;
+            text-decoration: none;
+            padding: 10px 15px;
+            transition: color 0.3s ease, font-weight 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+            /* Hover effect for nav-link */
+            .nav-link:hover {
+                color: #00796B;
+                font-weight: bold;
+            }
+
+            /* Icon styles */
+            .nav-link i {
+                margin-right: 8px; /* Space between icon and text */
+            }
+
+        /* Styles for the navigation card */
+        .nav-card {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 10px 20px;
+        }
+    </style>
+</html>

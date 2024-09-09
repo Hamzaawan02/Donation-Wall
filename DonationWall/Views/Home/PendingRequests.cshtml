@@ -1,0 +1,160 @@
+﻿@model List<DonationWall.ViewModels.PendingRequestViewModel>
+
+@{
+    ViewBag.Title = "Pending Requests";
+}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    .card {
+        border: none;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        overflow: hidden;
+        background-color: #ffffff;
+        padding: 20px;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+    .card-title {
+        font-weight: bold;
+        color: #00796B;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .card-text {
+        color: #6c757d;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        transition: background-color 0.2s;
+        border-radius: 30px;
+        font-weight: bold;
+        padding: 10px 25px;
+    }
+
+    .btn-success {
+        background-color: #009688;
+        border-color: #009688;
+    }
+
+    .btn-danger {
+        background-color: #e53935;
+        border-color: #e53935;
+    }
+
+    .btn-primary {
+        background-color: #00796B;
+        border-color: #00796B;
+    }
+
+    .btn-success:hover {
+        background-color: #00796B;
+        color: #fff;
+    }
+
+    .btn-danger:hover {
+        background-color: #c62828;
+        color: #fff;
+    }
+
+    .btn-primary:hover {
+        background-color: #004d40;
+        color: #fff;
+    }
+
+    h3 {
+        color: #00bcd4;
+        font-weight: bold;
+        margin-bottom: 30px;
+        text-align: center;
+        font-size: 1.75rem;
+    }
+
+    h5 {
+        color: #00bcd4;
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+
+    .unhide-note {
+        color: #e53935;
+        font-size: 0.9rem;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="container mt-4">
+    <h3 class="text-center">Pending Requests</h3>
+    @if (Model.Count == 0)
+    {
+        <h5 class="text-center text-muted">No pending requests</h5>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var request in Model)
+            {
+                if (request.Post != null)
+                {
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <div class="card h-100">
+                            @{
+                                var imagurl = request.ImageUrl == null ? "" : request.ImageUrl.Substring(1, request.ImageUrl.Length - 1);
+                            }
+                            <img class="card-img-top" src="@imagurl" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">@request.Post.Name</h5>
+                                <p class="card-text">@request.Post.Description</p>
+                                <p class="card-text"><strong>Location:</strong> @request.Post.Location</p>
+                                <p class="card-text"><strong>Expressed At:</strong> @request.Interest.ExpressedAt.ToString("MM/dd/yyyy hh:mm tt")</p>
+
+                                @if (User.IsInRole("Donor"))
+                                {
+                                    <p class="unhide-note">Post will be unhide in 24 hours.</p>
+                                }
+
+                                @if (request.Interest.Status == "Pending")
+                                {
+                                    <form method="post" action="@Url.Action("AcceptRequest", "Home")" class="mt-2">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="interestId" value="@request.Interest.ID" />
+                                        <button type="submit" class="btn btn-success btn-block">Accept</button>
+                                    </form>
+                                    <form method="post" action="@Url.Action("RejectRequest", "Home")" class="mt-2">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="interestId" value="@request.Interest.ID" />
+                                        <button type="submit" class="btn btn-danger btn-block">Reject</button>
+                                    </form>
+                                }
+                                else if (request.Interest.Status == "Accepted")
+                                {
+                                    <p class="card-text"><strong>Accepter Name:</strong> @request.AccepterName</p>
+                                    <p class="card-text"><strong>Accepter Email:</strong> @request.AccepterEmail</p>
+                                    <p class="card-text"><strong>Accepter Contact:</strong> @request.AccepterContact</p>
+
+                                    <!-- Done Button -->
+                                    <form method="post" action="@Url.Action("DoneRequest", "Home")" class="mt-2">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="interestId" value="@request.Interest.ID" />
+                                        <button type="submit" class="btn btn-primary btn-block">Done</button>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>

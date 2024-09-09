@@ -1,0 +1,125 @@
+﻿@model List<DonationWall.ViewModels.DonationHistoryViewModel>
+@{
+    ViewBag.Title = "Donation History";
+    var isDonor = User.IsInRole("Donor");
+    var isAccepter = User.IsInRole("Accepter");
+}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    .card {
+        border: none;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #f3f4f6, #ffffff); /* Subtle gradient background */
+        padding: 25px;
+    }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+    .card-title {
+        font-weight: bold;
+        color: #00796B; /* Adjust this to match your website's primary color */
+        font-size: 1.7rem;
+        margin-bottom: 15px;
+    }
+
+    .card-text {
+        color: #5f6368;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+
+    h2 {
+        color: #00bcd4; /* Adjust this to match your website's primary color */
+        font-weight: bold;
+        margin-bottom: 30px;
+        text-align: center;
+        font-size: 2rem;
+    }
+
+    .text-center {
+        color: #00bcd4;
+    }
+
+    .badge-completed {
+        background-color: #00bcd4;
+        color: #fff;
+        font-size: 1rem;
+        padding: 8px 12px;
+        border-radius: 30px;
+        display: inline-block;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .badge-pending {
+        background-color: #ffc107;
+        color: #212529;
+        font-size: 1rem;
+        padding: 8px 12px;
+        border-radius: 30px;
+        display: inline-block;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .container h5 {
+        color: #00bcd4;
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-top: 20px;
+    }
+
+    .card-body p:last-child {
+        margin-bottom: 0; 
+    }
+</style>
+
+<div class="container mt-4">
+    <h2 class="mb-4">Donation History</h2>
+    @if (Model.Count == 0)
+    {
+        <h5 class="text-center">No donation history available</h5>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold">@item.Name</h5> <!-- Product Name in Bold -->
+                            <p class="card-text">@item.Description</p>
+
+                            @if (isAccepter && item.Post != null)
+                            {
+                                <p class="card-text"><strong>Location:</strong> @item.Location</p>
+                            }
+
+                            <p class="card-text"><strong>Expressed At:</strong> @item.Date.ToString("MM/dd/yyyy hh:mm tt")</p>
+
+                            @if (isDonor)
+                            {
+                                <p class="card-text"><strong>Accepter Name:</strong> @item.AccepterName</p>
+                                <p class="card-text"><strong>Accepter Contact:</strong> @item.AccepterContact</p>
+                                <p class="card-text"><strong>Accepter Email:</strong> @item.AccepterEmail</p>
+                                <p class="card-text"><strong>Status:</strong> <span class="badge badge-completed">Completed</span></p>
+                            }
+                            else if (isAccepter)
+                            {
+                                <p class="card-text"><strong>Status:</strong> <span class="badge badge-pending">@item.Status</span></p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

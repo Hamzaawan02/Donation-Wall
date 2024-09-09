@@ -1,0 +1,116 @@
+﻿@model DonationWall.ViewModels.PostDetailViewModel
+@{
+    ViewBag.Title = "PostDetail";
+}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    h3 {
+        color: #00bcd4;
+        font-weight: bold;
+        margin-bottom: 20px;
+        font-size: 1.75rem;
+    }
+
+    .card {
+        border: none;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+    .card-title {
+        font-size: 1.5rem;
+        color: #00796B;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .card-text {
+        color: #5f6368;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 10px;
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+        border-radius: 15px;
+    }
+
+    iframe {
+        border-radius: 15px;
+    }
+</style>
+
+<div class="container mt-4">
+    <h3>Product Detail</h3>
+    <div class="card mb-4">
+        <div class="card-body">
+            @if (Model.PostDetail != null)
+            {
+                <h5 class="card-title">Product Name: @Model.PostDetail.Name</h5>
+                <p class="card-text"><strong>Description:</strong> @Model.PostDetail.Description</p>
+                <p class="card-text"><strong>Location:</strong> @Model.PostDetail.Location</p>
+            }
+            else
+            {
+                <h5 class="card-title text-muted">Product details are not available.</h5>
+            }
+        </div>
+    </div>
+
+    <h3>Product Images</h3>
+    <div class="row">
+        @if (Model.PostImages != null && Model.PostImages.Count > 0)
+                    {
+                        foreach (var item in Model.PostImages)
+                        {
+                            var imagurl = item.ImageURL == null ? "" : item.ImageURL.Substring(1, item.ImageURL.Length - 1);
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img class="card-img-top" src="@imagurl" alt="Product Image" />
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <h5 class="text-center text-muted">No Images to Display</h5>
+        }
+    </div>
+
+    <h3>Product Videos</h3>
+    @if (Model.PostVideo != null && Model.PostVideo.Count > 0)
+    {
+        <div class="row">
+            @foreach (var video in Model.PostVideo)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body p-0">
+                            <iframe class="w-100" style="height: 315px;" src="~/PostVideos/@video.VideoURL" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <h5 class="text-center text-muted">No Videos to Display</h5>
+    }
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
